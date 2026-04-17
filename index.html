@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JCDecolux — Peintre en bâtiment à Metz (57) · Décoration intérieure</title>
+<meta name="description" content="JCDecolux by Juan Carballo, peintre professionnel à Metz et en Moselle (57). Peinture intérieure, extérieure, décoration, rénovation complète. Devis gratuit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=Epilogue:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07080B;
+  --bg2: #0C0D11;
+  --rouge: #C43820;
+  --rouge2: #E05838;
+  --plaster: #EDE8DF;
+  --white: #F2EDE6;
+  --dim: rgba(242,237,230,0.52);
+  --gris: #72808E;
+  --accent: var(--rouge);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Epilogue',sans-serif;font-weight:400;overflow-x:hidden;cursor:none}
+
+#cursor-glow{position:fixed;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(196,56,32,0.1) 0%,transparent 70%);pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cursor-dot{position:fixed;width:7px;height:7px;border-radius:50%;background:var(--rouge);pointer-events:none;z-index:10000;transform:translate(-50%,-50%);box-shadow:0 0 10px var(--rouge)}
+#grain{position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:0.035}
+#particles{position:fixed;inset:0;pointer-events:none;z-index:1}
+
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* Navbar */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 56px;height:72px;display:flex;align-items:center;justify-content:space-between;background:rgba(7,8,11,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(196,56,32,0.1)}
+.nav-logo{font-family:'Big Shoulders Display',sans-serif;font-size:1.45rem;font-weight:900;letter-spacing:0.06em;color:var(--white);line-height:1}
+.nav-logo span{color:var(--rouge)}
+.nav-logo small{display:block;font-family:'Epilogue',sans-serif;font-size:0.58rem;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--gris);margin-top:1px}
+.nav-badge{display:flex;align-items:center;gap:6px;background:rgba(196,56,32,0.08);border:1px solid rgba(196,56,32,0.2);padding:6px 16px;border-radius:100px;font-size:0.67rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--rouge2)}
+.nav-right{display:flex;align-items:center;gap:22px}
+.nav-tel{font-family:'Big Shoulders Display',sans-serif;font-size:1.05rem;font-weight:900;color:var(--white);text-decoration:none;letter-spacing:0.04em;transition:color 0.2s}
+.nav-tel:hover{color:var(--rouge)}
+.btn-accent{background:var(--rouge);color:var(--white);font-family:'Epilogue',sans-serif;font-weight:700;font-size:0.74rem;letter-spacing:0.15em;text-transform:uppercase;padding:10px 22px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:background 0.2s,transform 0.1s}
+.btn-accent:hover{background:var(--rouge2);transform:translateY(-1px)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 56px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 65% at 12% 48%,rgba(196,56,32,0.1) 0%,transparent 60%),radial-gradient(ellipse 50% 60% at 80% 15%,rgba(224,88,56,0.05) 0%,transparent 55%),radial-gradient(ellipse 60% 45% at 88% 82%,rgba(114,128,142,0.04) 0%,transparent 55%);pointer-events:none}
+.hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(196,56,32,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(196,56,32,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero-inner{max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.1fr 0.9fr;gap:80px;align-items:center;position:relative;z-index:2}
+
+.hero-kicker{display:inline-flex;align-items:center;gap:10px;font-size:0.69rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--rouge);margin-bottom:24px}
+.hero-kicker::before{content:'';width:22px;height:2px;background:var(--rouge);display:block}
+.hero-h1{font-family:'Big Shoulders Display',sans-serif;font-weight:900;font-size:clamp(3.8rem,7.5vw,6.8rem);line-height:0.88;letter-spacing:-0.01em;margin-bottom:28px}
+.hero-h1 .city{background:linear-gradient(135deg,var(--rouge2) 0%,var(--rouge) 45%,#8A2010 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 28px rgba(196,56,32,0.5));display:inline}
+.hero-sub{font-size:0.97rem;font-weight:300;color:var(--dim);line-height:1.78;max-width:430px;margin-bottom:44px}
+.hero-ctas{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.btn-outline{border:1px solid rgba(196,56,32,0.3);color:var(--rouge2);font-family:'Epilogue',sans-serif;font-weight:600;font-size:0.74rem;letter-spacing:0.15em;text-transform:uppercase;padding:10px 22px;background:transparent;cursor:pointer;text-decoration:none;display:inline-block;transition:border-color 0.2s,color 0.2s}
+.btn-outline:hover{border-color:var(--rouge);color:var(--rouge)}
+
+/* Hero right */
+.hero-right{display:flex;flex-direction:column;justify-content:space-between;min-height:440px;gap:44px}
+.hero-deco{display:flex;flex-direction:column;gap:0;user-select:none;pointer-events:none}
+.deco-word{font-family:'Big Shoulders Display',sans-serif;font-weight:900;font-size:clamp(3.6rem,5.5vw,5.2rem);line-height:0.88;letter-spacing:-0.02em;color:transparent;-webkit-text-stroke:1px rgba(196,56,32,0.2);text-transform:uppercase}
+.deco-word:nth-child(2){-webkit-text-stroke-color:rgba(196,56,32,0.12);padding-left:18px}
+.deco-word.num{-webkit-text-stroke:none;color:rgba(196,56,32,0.07);font-size:clamp(5.5rem,9.5vw,9rem)}
+
+.stat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat-card{background:rgba(255,255,255,0.025);border:1px solid rgba(196,56,32,0.14);padding:20px 12px;text-align:center;backdrop-filter:blur(8px);animation:borderPulse 3.5s ease-in-out infinite;transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s}
+.stat-card:nth-child(2){animation-delay:1.2s}
+.stat-card:nth-child(3){animation-delay:2.4s}
+.stat-card:hover{border-color:rgba(196,56,32,0.45);transform:translateY(-3px);box-shadow:0 10px 30px rgba(196,56,32,0.08)}
+.stat-val{font-family:'Big Shoulders Display',sans-serif;font-size:1.55rem;font-weight:900;color:var(--rouge2);line-height:1;margin-bottom:5px;letter-spacing:-0.01em}
+.stat-val.shimmer-num{background:linear-gradient(90deg,var(--rouge) 0%,var(--rouge2) 35%,var(--plaster) 55%,var(--rouge) 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 2.8s linear infinite}
+.stat-label{font-size:0.6rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gris)}
+
+@keyframes borderPulse{0%,100%{border-color:rgba(196,56,32,0.14)}50%{border-color:rgba(196,56,32,0.42)}}
+@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+
+/* Strip */
+.strip{background:var(--rouge);padding:13px 56px;display:flex;align-items:center;justify-content:center;gap:34px;flex-wrap:wrap;position:relative;z-index:10}
+.strip-item{display:flex;align-items:center;gap:8px;font-size:0.73rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--white)}
+.strip-sep{width:4px;height:4px;background:rgba(255,255,255,0.4);border-radius:50%}
+
+/* Sections */
+section{padding:100px 56px;position:relative;z-index:2}
+.section-inner{max-width:1280px;margin:0 auto}
+.section-kicker{font-size:0.65rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--rouge);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.section-kicker::before{content:'';width:18px;height:1px;background:var(--rouge)}
+.section-title{font-family:'Big Shoulders Display',sans-serif;font-size:clamp(2.4rem,4.5vw,3.8rem);font-weight:900;line-height:0.93;letter-spacing:-0.01em;margin-bottom:16px}
+.section-sub{font-size:0.95rem;font-weight:300;color:var(--dim);max-width:540px;line-height:1.78;margin-bottom:56px}
+
+/* Services */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.service-card{background:var(--bg2);border:1px solid rgba(196,56,32,0.09);padding:36px 28px;position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s;cursor:default}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--rouge),transparent);opacity:0;transition:opacity 0.3s}
+.service-card:hover::before{opacity:1}
+.service-card:hover{border-color:rgba(196,56,32,0.28);box-shadow:0 12px 40px rgba(196,56,32,0.07)}
+.service-num{font-family:'Big Shoulders Display',sans-serif;font-size:4.5rem;font-weight:900;color:rgba(196,56,32,0.06);line-height:1;position:absolute;right:18px;top:14px;pointer-events:none;transition:color 0.3s}
+.service-card:hover .service-num{color:rgba(196,56,32,0.14)}
+.service-icon{width:42px;height:42px;background:rgba(196,56,32,0.08);border:1px solid rgba(196,56,32,0.18);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:1.2rem}
+.service-name{font-family:'Big Shoulders Display',sans-serif;font-size:1.45rem;font-weight:900;letter-spacing:0.02em;margin-bottom:10px;line-height:1.1}
+.service-desc{font-size:0.84rem;font-weight:300;color:var(--dim);line-height:1.68}
+
+/* Avis — 4 reviews, 4-col grid */
+.reviews-section{background:var(--bg2);border-top:1px solid rgba(196,56,32,0.08);border-bottom:1px solid rgba(196,56,32,0.08)}
+.reviews-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:56px}
+.review-card{background:var(--bg);border:1px solid rgba(196,56,32,0.1);padding:28px 22px;position:relative;transition:border-color 0.3s,transform 0.3s}
+.review-card:hover{border-color:rgba(196,56,32,0.28);transform:translateY(-3px)}
+.review-stars{display:flex;gap:3px;margin-bottom:14px}
+.star{color:var(--rouge);font-size:0.85rem}
+.review-text{font-size:0.84rem;font-weight:300;color:var(--dim);line-height:1.68;margin-bottom:18px;font-style:italic}
+.review-text::before{content:'"';font-size:1.4rem;color:rgba(196,56,32,0.35);line-height:1;display:block;margin-bottom:4px;font-style:normal}
+.review-author{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--white)}
+.review-date{font-size:0.65rem;font-weight:400;color:var(--gris);margin-top:2px}
+.review-badge{position:absolute;top:18px;right:18px;background:rgba(196,56,32,0.1);border:1px solid rgba(196,56,32,0.2);width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:var(--rouge2)}
+
+/* Zone */
+.zone-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px}
+.zone-tag{background:rgba(196,56,32,0.05);border:1px solid rgba(196,56,32,0.13);padding:8px 18px;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;color:var(--plaster);transition:background 0.2s,border-color 0.2s}
+.zone-tag.main{background:rgba(196,56,32,0.12);border-color:rgba(196,56,32,0.35);color:var(--rouge2)}
+.zone-tag:hover{background:rgba(196,56,32,0.1);border-color:rgba(196,56,32,0.28)}
+
+/* Contact */
+.contact-section{background:linear-gradient(135deg,rgba(196,56,32,0.05) 0%,transparent 55%);border-top:1px solid rgba(196,56,32,0.1)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.contact-info-list{margin-top:40px;display:flex;flex-direction:column;gap:20px}
+.contact-info-item{display:flex;align-items:flex-start;gap:16px}
+.contact-info-icon{width:40px;height:40px;min-width:40px;background:rgba(196,56,32,0.08);border:1px solid rgba(196,56,32,0.18);display:flex;align-items:center;justify-content:center;font-size:0.95rem}
+.contact-info-text strong{display:block;font-size:0.67rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--rouge);margin-bottom:3px}
+.contact-info-text span{font-size:0.9rem;color:var(--white)}
+.contact-info-text a{color:var(--white);text-decoration:none;transition:color 0.2s}
+.contact-info-text a:hover{color:var(--rouge2)}
+
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:7px}
+.form-input,.form-select,.form-textarea{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(196,56,32,0.13);padding:12px 15px;font-family:'Epilogue',sans-serif;font-size:0.87rem;color:var(--white);outline:none;transition:border-color 0.2s,background 0.2s;appearance:none}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--rouge);background:rgba(196,56,32,0.04)}
+.form-select option{background:#1a1a1a}
+.form-textarea{resize:vertical;min-height:100px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.btn-submit{width:100%;background:var(--rouge);color:var(--white);font-family:'Epilogue',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:0.16em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;transition:background 0.2s;margin-top:4px}
+.btn-submit:hover{background:var(--rouge2)}
+
+/* Maps */
+.maps-section{padding:0 56px 100px;position:relative;z-index:2}
+.maps-inner{max-width:1280px;margin:0 auto}
+.map-label{font-size:0.65rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--rouge);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.map-label::before{content:'';width:18px;height:1px;background:var(--rouge)}
+.map-container{width:100%;height:360px;border:1px solid rgba(196,56,32,0.15);overflow:hidden;filter:grayscale(0.35) contrast(1.08)}
+.map-container iframe{width:100%;height:100%;border:none}
+
+/* Footer */
+footer{background:#040507;border-top:1px solid rgba(196,56,32,0.1);padding:48px 56px;position:relative;z-index:2}
+.footer-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px}
+.footer-logo{font-family:'Big Shoulders Display',sans-serif;font-size:1.35rem;font-weight:900;color:var(--white);letter-spacing:0.06em}
+.footer-logo span{color:var(--rouge)}
+.footer-copy{font-size:0.72rem;color:var(--gris);line-height:1.65;text-align:center}
+.footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.footer-tel a{font-family:'Big Shoulders Display',sans-serif;font-size:1.2rem;font-weight:900;color:var(--rouge2);text-decoration:none;letter-spacing:0.04em;transition:color 0.2s}
+.footer-tel a:hover{color:var(--rouge)}
+.footer-insta a{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;color:var(--gris);text-decoration:none;transition:color 0.2s}
+.footer-insta a:hover{color:var(--rouge2)}
+
+/* Sticky bar */
+.sticky-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(7,8,11,0.96);backdrop-filter:blur(20px);border-top:1px solid rgba(196,56,32,0.22);padding:10px 16px;gap:10px}
+.sticky-bar a{flex:1;text-align:center;padding:13px;font-family:'Epilogue',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;display:block}
+.sticky-bar a:first-child{background:var(--rouge);color:var(--white)}
+.sticky-bar a:last-child{background:transparent;border:1px solid rgba(196,56,32,0.3);color:var(--rouge2)}
+
+/* Responsive */
+@media(max-width:1200px){.reviews-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;gap:56px}
+  .hero-right{min-height:auto}
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{grid-template-columns:1fr;gap:48px}
+}
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-badge{display:none}
+  .nav-right>a:not(.btn-accent){display:none}
+  .hero,.strip{padding-left:20px;padding-right:20px}
+  section{padding:80px 20px}
+  .maps-section{padding:0 20px 80px}
+  .hero{padding-top:96px}
+  .services-grid{grid-template-columns:1fr}
+  .reviews-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .sticky-bar{display:flex}
+  footer{padding:40px 20px 80px}
+  .footer-inner{flex-direction:column;align-items:flex-start}
+  .footer-right{align-items:flex-start}
+  .footer-copy{text-align:left}
+}
+</style>
+</head>
+<body>
+<div id="cursor-glow"></div>
+<div id="cursor-dot"></div>
+<canvas id="grain"></canvas>
+<canvas id="particles"></canvas>
+
+<!-- Navbar -->
+<nav>
+  <div class="nav-logo">
+    <span>JC</span>Decolux
+    <small>By Juan Carballo</small>
+  </div>
+  <div class="nav-badge">
+    <svg width="7" height="7" viewBox="0 0 7 7"><circle cx="3.5" cy="3.5" r="3.5" fill="currentColor"/></svg>
+    Peintre · Metz (57)
+  </div>
+  <div class="nav-right">
+    <a class="nav-tel" href="tel:0769528617">07 69 52 86 17</a>
+    <a class="btn-accent" href="#contact">Devis gratuit</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-kicker">Peintre en bâtiment · Metz (57)</div>
+      <h1 class="hero-h1">
+        Peinture &<br>décoration à<br><span class="city city-scramble">METZ</span>
+      </h1>
+      <p class="hero-sub">JCDecolux by Juan Carballo — peintre professionnel à Metz et en Moselle. Intérieur, extérieur, rénovation complète. Ponctuel, soigné, dans les temps.</p>
+      <div class="hero-ctas">
+        <a class="btn-accent" href="tel:0769528617">07 69 52 86 17</a>
+        <a class="btn-outline" href="#contact">Demander un devis</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-deco">
+        <div class="deco-word">PEINTURE</div>
+        <div class="deco-word">DÉCO</div>
+        <div class="deco-word num">57</div>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-val shimmer-num">5★</div>
+          <div class="stat-label">Note Google</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">PRO</div>
+          <div class="stat-label">Artisan qualifié</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">57</div>
+          <div class="stat-label">Moselle</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Strip -->
+<div class="strip">
+  <div class="strip-item">Devis gratuit</div>
+  <div class="strip-sep"></div>
+  <div class="strip-item">Metz & Moselle (57)</div>
+  <div class="strip-sep"></div>
+  <div class="strip-item">Ponctuel — dans les temps</div>
+  <div class="strip-sep"></div>
+  <div class="strip-item">Rénovation complète</div>
+</div>
+
+<!-- Services -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-kicker fade-up">Prestations</div>
+    <h2 class="section-title fade-up">Ce que nous<br>réalisons</h2>
+    <p class="section-sub fade-up">JCDecolux intervient sur tous vos projets de peinture et décoration, en intérieur comme en extérieur.</p>
+    <div class="services-grid">
+      <div class="service-card fade-up" data-tilt>
+        <div class="service-num">01</div>
+        <div class="service-icon">🏠</div>
+        <div class="service-name">Peinture intérieure</div>
+        <p class="service-desc">Murs, plafonds, boiseries, portes et fenêtres. Préparation soignée du support, finitions impeccables.</p>
+      </div>
+      <div class="service-card fade-up" data-tilt>
+        <div class="service-num">02</div>
+        <div class="service-icon">🏗️</div>
+        <div class="service-name">Peinture extérieure</div>
+        <p class="service-desc">Façades, volets, bardages. Protection longue durée contre les intempéries et les UV.</p>
+      </div>
+      <div class="service-card fade-up" data-tilt>
+        <div class="service-num">03</div>
+        <div class="service-icon">🎨</div>
+        <div class="service-name">Décoration & effets</div>
+        <p class="service-desc">Papier peint, enduits décoratifs, stuc, béton ciré, effets matières. Conseil couleur inclus.</p>
+      </div>
+      <div class="service-card fade-up" data-tilt>
+        <div class="service-num">04</div>
+        <div class="service-icon">🏡</div>
+        <div class="service-name">Rénovation complète</div>
+        <p class="service-desc">Maison entière, appartement, local commercial. Prise en charge totale du projet de A à Z.</p>
+      </div>
+      <div class="service-card fade-up" data-tilt>
+        <div class="service-num">05</div>
+        <div class="service-icon">🪟</div>
+        <div class="service-name">Menuiseries & détails</div>
+        <p class="service-desc">Boiseries, plinthes, moulures, huisseries. Préparation, ponçage, impression, finition laquée.</p>
+      </div>
+      <div class="service-card fade-up" data-tilt>
+        <div class="service-num">06</div>
+        <div class="service-icon">🔧</div>
+        <div class="service-name">Préparation des supports</div>
+        <p class="service-desc">Lessivage, rebouchage, enduit de lissage, ponçage. La qualité de la finition commence par le support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Avis -->
+<section class="reviews-section" id="avis">
+  <div class="section-inner">
+    <div class="section-kicker fade-up">Avis clients</div>
+    <h2 class="section-title fade-up">Ce que disent<br>nos clients</h2>
+    <p class="section-sub fade-up">Avis vérifiés Google — chaque chantier livré dans les temps, soigné.</p>
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <div class="review-badge">★</div>
+        <div class="review-stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="review-text">C'est une expérience super avec eux, très ponctuel très sérieux, c'est des vrais pros</div>
+        <div class="review-author">Slay HD</div>
+        <div class="review-date">Juin 2025 · Google</div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-badge">★</div>
+        <div class="review-stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="review-text">Je vous conseille ce peintre qui est à l'écoute, qui travaille soigneusement et dans les temps !</div>
+        <div class="review-author">Ryan Conrard-Carvalho</div>
+        <div class="review-date">Juin 2025 · Google</div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-badge">★</div>
+        <div class="review-stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="review-text">Très pro — le meilleur</div>
+        <div class="review-author">Ali Gul · Guide Local</div>
+        <div class="review-date">Juin 2025 · Google</div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-badge">★</div>
+        <div class="review-stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="review-text">Très bon artisan, je recommande vivement — maison rénovée entièrement</div>
+        <div class="review-author">Alex</div>
+        <div class="review-date">Avril 2026 · Google</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Zone -->
+<section id="zone">
+  <div class="section-inner">
+    <div class="section-kicker fade-up">Zone d'intervention</div>
+    <h2 class="section-title fade-up">Metz et toute<br>la Moselle (57)</h2>
+    <p class="section-sub fade-up">JCDecolux intervient à Metz et dans un large rayon en Moselle et Grand Est.</p>
+    <div class="zone-tags fade-up">
+      <span class="zone-tag main">Metz</span>
+      <span class="zone-tag">Montigny-lès-Metz</span>
+      <span class="zone-tag">Woippy</span>
+      <span class="zone-tag">Thionville</span>
+      <span class="zone-tag">Forbach</span>
+      <span class="zone-tag">Sarrebourg</span>
+      <span class="zone-tag">Sarreguemines</span>
+      <span class="zone-tag">Creutzwald</span>
+      <span class="zone-tag">Saint-Avold</span>
+      <span class="zone-tag">Yutz</span>
+      <span class="zone-tag">Hagondange</span>
+      <span class="zone-tag">Moselle (57) entier</span>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact-section" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-left fade-up">
+        <div class="section-kicker">Contact</div>
+        <h2 class="section-title">Demandez votre<br>devis gratuit</h2>
+        <p style="font-size:0.93rem;font-weight:300;color:var(--dim);line-height:1.78;max-width:380px;margin-bottom:36px">Décrivez votre projet, Juan vous rappelle rapidement.</p>
+        <div class="contact-info-list">
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📞</div>
+            <div class="contact-info-text">
+              <strong>Téléphone</strong>
+              <span>07 69 52 86 17</span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📍</div>
+            <div class="contact-info-text">
+              <strong>Zone</strong>
+              <span>Metz & Moselle (57)</span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📸</div>
+            <div class="contact-info-text">
+              <strong>Instagram</strong>
+              <span><a href="https://www.instagram.com/jcdecolux" target="_blank" rel="noopener">@jcdecolux</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right fade-up">
+        <form action="mailto:contact@jcdecolux.fr" method="post" enctype="text/plain">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Prénom</label>
+              <input type="text" class="form-input" placeholder="Votre prénom" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-input" placeholder="Votre nom">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Téléphone</label>
+              <input type="tel" class="form-input" placeholder="06 xx xx xx xx" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Ville</label>
+              <input type="text" class="form-input" placeholder="Metz, Thionville...">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type de travaux</label>
+            <select class="form-select">
+              <option value="">— Choisir —</option>
+              <option>Peinture intérieure</option>
+              <option>Peinture extérieure</option>
+              <option>Décoration / effets</option>
+              <option>Rénovation complète</option>
+              <option>Papier peint</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" placeholder="Décrivez votre projet (surface, pièces, délai souhaité...)"></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Envoyer ma demande de devis →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Maps -->
+<div class="maps-section">
+  <div class="maps-inner">
+    <div class="map-label fade-up">Zone d'intervention — Metz, Moselle (57)</div>
+    <div class="map-container">
+      <iframe src="https://maps.google.com/maps?q=49.0783045,6.1953893&t=&z=12&output=embed" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>JC</span>Decolux — Peintre Metz</div>
+    <div class="footer-copy">
+      JCDecolux by Juan Carballo · Peintre professionnel · Metz (57) · Moselle<br>
+      Peinture intérieure · Extérieure · Décoration · Rénovation complète
+    </div>
+    <div class="footer-right">
+      <div class="footer-tel"><a href="tel:0769528617">07 69 52 86 17</a></div>
+      <div class="footer-insta"><a href="https://www.instagram.com/jcdecolux" target="_blank" rel="noopener">@jcdecolux</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky mobile bar -->
+<div class="sticky-bar">
+  <a href="tel:0769528617">Appeler Juan</a>
+  <a href="#contact">Devis gratuit</a>
+</div>
+
+<script>
+// Cursor glow — lerp rAF
+const glowEl = document.getElementById('cursor-glow');
+const dotEl = document.getElementById('cursor-dot');
+let mx = innerWidth/2, my = innerHeight/2, gx = mx, gy = my;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function animCursor() {
+  gx += (mx - gx) * 0.07;
+  gy += (my - gy) * 0.07;
+  glowEl.style.left = gx + 'px'; glowEl.style.top = gy + 'px';
+  dotEl.style.left = mx + 'px'; dotEl.style.top = my + 'px';
+  requestAnimationFrame(animCursor);
+})();
+
+// Grain canvas
+const grain = document.getElementById('grain');
+const gCtx = grain.getContext('2d');
+function resizeGrain() { grain.width = innerWidth; grain.height = innerHeight; }
+resizeGrain(); addEventListener('resize', resizeGrain);
+(function renderGrain() {
+  const img = gCtx.createImageData(grain.width, grain.height);
+  const d = img.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const v = Math.random() * 255;
+    d[i] = d[i+1] = d[i+2] = v; d[i+3] = 13;
+  }
+  gCtx.putImageData(img, 0, 0);
+  setTimeout(renderGrain, 80);
+})();
+
+// Particles — gouttes de peinture / brush strokes
+const pc = document.getElementById('particles');
+const pCtx = pc.getContext('2d');
+function resizePC() { pc.width = innerWidth; pc.height = innerHeight; }
+resizePC(); addEventListener('resize', resizePC);
+
+const PAINT_COLORS = ['#C43820','#E05838','#EDE8DF','#8A2010','#72808E'];
+class PaintDrop {
+  constructor(init) {
+    this.x = Math.random() * pc.width;
+    this.y = init ? Math.random() * pc.height : -20;
+    this.w = 3 + Math.random() * 7;
+    this.h = (this.w * 1.5) + Math.random() * 8; // elongated drop shape
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = 0.5 + Math.random() * 1.0;
+    this.rot = (Math.random() - 0.5) * 0.3;
+    this.vrot = (Math.random() - 0.5) * 0.015;
+    this.alpha = 0.05 + Math.random() * 0.15;
+    this.color = PAINT_COLORS[Math.floor(Math.random() * PAINT_COLORS.length)];
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy; this.rot += this.vrot;
+    if (this.y > pc.height + 30) { this.y = -20; this.x = Math.random() * pc.width; }
+  }
+  draw() {
+    pCtx.save();
+    pCtx.translate(this.x, this.y);
+    pCtx.rotate(this.rot);
+    pCtx.globalAlpha = this.alpha;
+    pCtx.fillStyle = this.color;
+    // Elongated rounded shape (paint drop)
+    pCtx.beginPath();
+    const r = this.w / 2;
+    pCtx.ellipse(0, 0, r, this.h / 2, 0, 0, Math.PI * 2);
+    pCtx.fill();
+    pCtx.restore();
+  }
+}
+const drops = Array.from({length: 50}, (_, i) => new PaintDrop(i < 25));
+(function animParticles() {
+  pCtx.clearRect(0, 0, pc.width, pc.height);
+  drops.forEach(d => { d.update(); d.draw(); });
+  requestAnimationFrame(animParticles);
+})();
+
+// Char scramble — Set-safe pour accents
+const ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const ACCENTS = new Set('ÀÂÄÉÈÊËÎÏÔÖÙÛÜŸàâäéèêëîïôöùûüÿç');
+function scramble(el) {
+  const target = el.textContent;
+  const chars = [...target];
+  let frame = 0;
+  const total = 28;
+  (function tick() {
+    el.textContent = chars.map((c, i) => {
+      if (c === ' ' || ACCENTS.has(c)) return c;
+      if (frame / total > i / chars.length) return c;
+      return ALPHA[Math.floor(Math.random() * 26)];
+    }).join('');
+    if (++frame <= total) requestAnimationFrame(tick);
+    else el.textContent = target;
+  })();
+}
+const cityEl = document.querySelector('.city-scramble');
+if (cityEl) { scramble(cityEl); setInterval(() => scramble(cityEl), 5000); }
+
+// 3D tilt — service cards
+document.querySelectorAll('[data-tilt]').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `perspective(600px) rotateX(${-y * 9}deg) rotateY(${x * 9}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) translateY(0)';
+  });
+});
+
+// Fade-up IntersectionObserver
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "JCDecolux By Juan Carballo",
+  "description": "Peintre professionnel à Metz et en Moselle (57). Peinture intérieure, extérieure, décoration, papier peint, rénovation complète.",
+  "telephone": "+33769528617",
+  "sameAs": ["https://www.instagram.com/jcdecolux"],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Metz",
+    "postalCode": "57000",
+    "addressRegion": "Moselle",
+    "addressCountry": "FR"
+  },
+  "geo": {"@type": "GeoCoordinates", "latitude": 49.0783045, "longitude": 6.1953893},
+  "areaServed": [
+    {"@type": "City", "name": "Metz"},
+    {"@type": "AdministrativeArea", "name": "Moselle"}
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "4",
+    "bestRating": "5"
+  },
+  "priceRange": "€€"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "JCDecolux intervient-il dans toute la Moselle ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, JCDecolux by Juan Carballo intervient à Metz et dans toute la Moselle (57) : Thionville, Forbach, Sarreguemines, Saint-Avold, Sarrebourg et les communes alentours."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels types de travaux réalise JCDecolux ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "JCDecolux réalise tous types de travaux de peinture et décoration : peinture intérieure (murs, plafonds, boiseries), peinture extérieure (façades, volets), papier peint, enduits décoratifs, et rénovation complète de maison ou appartement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment obtenir un devis de JCDecolux ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Contactez JCDecolux par téléphone au 07 69 52 86 17 ou via le formulaire de contact. Le devis est gratuit, sans engagement."
+      }
+    }
+  ]
+}
+</script>
+</body>
+</html>
